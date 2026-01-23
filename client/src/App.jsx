@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <Navbar>
+      <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
-      </Navbar>
+      
       </BrowserRouter>
     </>
   )
