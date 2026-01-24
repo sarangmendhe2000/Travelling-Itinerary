@@ -21,18 +21,39 @@ function Login() {
     });
   };
 
-  // Handle submit
+  // Handle submit (UI-level validation only)
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // basic validation
     if (!formData.email || !formData.password) {
-      setError("All fields are required!");
+      setError("Invalid email or password");
       return;
     }
 
+    /* 
+      TEMPORARY LOGIC
+      ----------------
+      Replace this block with backend API call later
+    */
+
+    const DEMO_EMAIL = "admin@gmail.com";
+    const DEMO_PASSWORD = "Admin@123";
+
+    if (
+      formData.email !== DEMO_EMAIL ||
+      formData.password !== DEMO_PASSWORD
+    ) {
+      setError("Invalid email or password");
+      return;
+    }
+
+    // success
     setError("");
-    console.log("Login Data:", formData);
-    navigate("/home");
+    console.log("Login successful:", formData);
+
+    // redirect (change later if needed)
+    navigate("/");
   };
 
   return (
@@ -40,13 +61,19 @@ function Login() {
       <div className="login-col">
         <div className="card login-card shadow">
           <div className="card-body">
-            <h3 className="text-center mb-1 welcome-animate">Welcome Back</h3>
+            <h3 className="text-center mb-1 welcome-animate">
+              Welcome Back
+            </h3>
 
             <p className="text-center text-muted mb-4 subtitle-animate">
               Login to your account
             </p>
 
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && (
+              <div className="alert alert-danger text-center">
+                {error}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit}>
               {/* Email */}
@@ -79,7 +106,9 @@ function Login() {
                 <label>Password</label>
 
                 <i
-                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                  className={`bi ${
+                    showPassword ? "bi-eye-slash" : "bi-eye"
+                  }`}
                   onClick={() => setShowPassword(!showPassword)}
                 ></i>
               </div>
@@ -88,14 +117,16 @@ function Login() {
               <div className="text-end mb-3">
                 <span
                   className="forgot-link"
-                  onClick={() => alert("Forgot password clicked")}
+                  onClick={() => navigate("/forgot-password")}
                 >
                   Forgot Password?
                 </span>
               </div>
 
               {/* Submit */}
-              <button className="btn btn-primary w-100">Login</button>
+              <button className="btn btn-primary w-100">
+                Login
+              </button>
 
               {/* Signup */}
               <div className="text-center mt-3">
