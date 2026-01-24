@@ -1,0 +1,98 @@
+/* SERVICE HERO */
+/* SERVICE HERO - COLORFUL SCENIC */
+.service-hero {
+  width: 100vw;
+  height: 50vh;
+
+  
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  padding-top: 70px;
+}
+
+/* SERVICE TEXT */
+.service-title {
+  font-size: 56px;
+  font-weight: bold;
+ text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  transition: transform 0.4s ease;
+  color: white;
+}
+
+.service-title:hover {
+  transform: scale(1.1);
+}
+
+
+/* SECTION */
+.section {
+  padding: 60px 0;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* SUBTITLE */
+.subtitle {
+  color: gray;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* CARDS */
+.cards {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* CARD */
+.card {
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 30px;
+  }
+
+  .service-hero {
+    height: 35vh;
+  }
+}
