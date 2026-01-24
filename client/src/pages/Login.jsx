@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 function Login() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -23,86 +25,94 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError("All fields are required!");
       return;
     }
 
     setError("");
-
-    // For now just navigate (backend later)
     console.log("Login Data:", formData);
-    navigate("/home");   // change route if needed
+    navigate("/home");
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "400px" }}>
-      <h3 className="text-center mb-4">Login</h3>
+    <div className="login-container">
+      <div className="login-col">
+        <div className="card login-card shadow">
+          <div className="card-body">
+            <h3 className="text-center mb-1 welcome-animate">Welcome Back</h3>
 
-      {error && (
-        <div className="alert alert-danger">
-          {error}
+            <p className="text-center text-muted mb-4 subtitle-animate">
+              Login to your account
+            </p>
+
+            {error && <div className="alert alert-danger">{error}</div>}
+
+            <form onSubmit={handleSubmit}>
+              {/* Email */}
+              <div className="form-group">
+                <i className="bi bi-envelope"></i>
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder=" "
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <label>Email</label>
+              </div>
+
+              {/* Password */}
+              <div className="form-group password-group">
+                <i className="bi bi-lock"></i>
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  className="form-control"
+                  placeholder=" "
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+
+                <label>Password</label>
+
+                <i
+                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                ></i>
+              </div>
+
+              {/* Forgot password */}
+              <div className="text-end mb-3">
+                <span
+                  className="forgot-link"
+                  onClick={() => alert("Forgot password clicked")}
+                >
+                  Forgot Password?
+                </span>
+              </div>
+
+              {/* Submit */}
+              <button className="btn btn-primary w-100">Login</button>
+
+              {/* Signup */}
+              <div className="text-center mt-3">
+                <p>
+                  Don&apos;t have an account?{" "}
+                  <span
+                    className="signup-link"
+                    onClick={() => navigate("/signup")}
+                  >
+                    Sign up
+                  </span>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-
-        {/* Email */}
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Password */}
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Forgot password */}
-        <div className="text-end mb-3">
-          <span
-            style={{ cursor: "pointer", color: "blue" }}
-            onClick={() => alert("Forgot password clicked")}
-          >
-            Forgot Password?
-          </span>
-        </div>
-
-        {/* Submit */}
-        <button className="btn btn-primary w-100">
-          Login
-        </button>
-
-        {/* Signup */}
-        <div className="text-center mt-3">
-          <p>
-            New user?{" "}
-            <span
-              style={{ cursor: "pointer", color: "blue" }}
-              onClick={() => navigate("/signup")}
-            >
-              Create New Account
-            </span>
-          </p>
-        </div>
-
-      </form>
+      </div>
     </div>
   );
 }

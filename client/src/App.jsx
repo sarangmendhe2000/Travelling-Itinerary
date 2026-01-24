@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Services from './pages/Services';
@@ -8,11 +8,17 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 
-function App() {
-  return (
-    <BrowserRouter>
+function AppContent() {
+  const location = useLocation();
 
-      <Navbar />
+  // Hide navbar on auth pages
+  const hideNavbar =
+    location.pathname === '/login' ||
+    location.pathname === '/signup';
+
+  return (
+    <>
+      {!hideNavbar && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,7 +28,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+    </>
+  );
+}
 
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
