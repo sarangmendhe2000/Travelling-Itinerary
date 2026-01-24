@@ -1,8 +1,10 @@
 /* GOOGLE FONT */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
-html, body {
+html,
+body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 /* RESET */
@@ -10,63 +12,67 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-/* FULL SCREEN BACKGROUND */
+/* =========================
+   BACKGROUND CONTAINER
+   ========================= */
 .login-container {
   position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  inset: 0;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding-right: 8%;
-  background-image:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-    url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
 
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  padding: 20px;
-  z-index: 999; /* ensure it sits above everything */
+  z-index: 999;
 }
 
-/* CENTER COLUMN */
+/* LOGIN COLUMN */
 .login-col {
   display: flex;
-  justify-content: flex-end; /* keeps it on right */
+  justify-content: flex-end;
   padding-right: 105px;
 }
 
-/* LOGIN CARD (CLEAN & NORMAL) */
+/* =========================
+   LOGIN CARD
+   ========================= */
 .login-card {
-  width: 400px;          /* 🔥 THIS CONTROLS WIDTH */
-  max-width: 90vw;       /* responsive safety */
-  
+  width: 400px;
+  max-width: 90vw;
+
   background: #ffffff;
   border-radius: 16px;
   padding: 32px 28px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 
-  /* animation */
   animation: slideInFromTop 2s ease-out forwards;
-  
 }
 
 /* HEADING */
 .login-card h3 {
   text-align: center;
   font-weight: 600;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   color: #333;
 }
 
-/* FORM GROUP */
+/* =========================
+   FORM GROUP
+   ========================= */
 .form-group {
   position: relative;
+  min-height: 76px;
   margin-bottom: 22px;
 }
 
@@ -78,24 +84,52 @@ html, body {
   transform: translateY(-50%);
   color: #888;
   font-size: 1rem;
+  pointer-events: none;
 }
 
-/* INPUT */
-.form-group input {
+/* =========================
+   INPUTS (TEXT / EMAIL / PASSWORD / TEL)
+   ========================= */
+.form-group input.form-control {
   width: 100%;
-  padding: 12px 14px 12px 42px;
+  height: 48px;
+
+  padding: 14px 14px 6px 42px;  /* 🔥 fixes vertical centering */
   border-radius: 10px;
   border: 1px solid #ddd;
   outline: none;
   font-size: 0.95rem;
 }
 
+
 /* INPUT FOCUS */
-.form-group input:focus {
+.form-group input.form-control:focus {
   border-color: #0d6efd;
 }
 
-/* FLOATING LABEL */
+/* =========================
+   SELECT (GENDER)
+   ========================= */
+.form-group select.form-control {
+  height: 48px;
+  padding: 14px 14px 6px 42px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   TEXTAREA (ADDRESS)
+   ========================= */
+.form-group textarea.form-control {
+  min-height: 100px;
+  padding: 18px 14px 10px 14px; /* no left icon */
+  line-height: 1.5;
+}
+
+/* =========================
+   FLOATING LABEL
+   ========================= */
 .form-group label {
   position: absolute;
   left: 42px;
@@ -104,26 +138,38 @@ html, body {
   font-size: 0.85rem;
   color: #999;
   pointer-events: none;
-  transition: 0.3s ease;
+  transition: 0.25s ease;
   background: #fff;
   padding: 0 6px;
 }
+.form-group textarea.form-control {
+  min-height: 100px;
 
-/* FLOAT EFFECT */
+  padding: 18px 14px 10px 14px; /* 🔥 no left icon space */
+  line-height: 1.5;
+}
+
+/* FLOAT EFFECT — INPUT & TEXTAREA */
 .form-group input:focus + label,
-.form-group input:not(:placeholder-shown) + label {
-  top: -6px;
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:focus + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  top: -8px;
   font-size: 0.75rem;
   color: #0d6efd;
 }
 
-.password-group i:last-child {
-  position: absolute;
-  cursor: pointer;
-  color: #888;
+/* FLOAT EFFECT — SELECT */
+.form-group select:focus + label,
+.form-group select:valid + label {
+  top: -8px;
+  font-size: 0.75rem;
+  color: #0d6efd;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+   ========================= */
 .login-card .btn-primary {
   width: 100%;
   padding: 12px;
@@ -141,13 +187,9 @@ html, body {
   transform: scale(1.04);
 }
 
-.login-card p.text-muted {
-  font-size: 0.9rem;
-}
-
-
-
-/* LINKS */
+/* =========================
+   LINKS
+   ========================= */
 .forgot-link,
 .signup-link {
   font-size: 0.85rem;
@@ -160,19 +202,18 @@ html, body {
   text-decoration: underline;
 }
 
-
+/* =========================
+   ANIMATIONS
+   ========================= */
 .welcome-animate {
   animation: zoomFadeIn 1.5s ease-out forwards;
-  /* animation-delay: 1s; */
 }
-
 
 .subtitle-animate {
   opacity: 0;
   animation: zoomFadeIn 0.6s ease-out forwards;
   animation-delay: 0.25s;
 }
-
 
 @keyframes slideInFromTop {
   0% {
@@ -196,17 +237,9 @@ html, body {
   }
 }
 
-
-
-
-
-/* MOBILE */
-@media (max-width: 576px) {
-  .login-card {
-    padding: 25px 20px;
-  }
-}
-
+/* =========================
+   MOBILE
+   ========================= */
 @media (max-width: 768px) {
   .login-container {
     justify-content: center;
@@ -214,8 +247,12 @@ html, body {
   }
 
   .login-col {
-    max-width: 100%;
+    padding-right: 0;
   }
 }
 
-
+@media (max-width: 576px) {
+  .login-card {
+    padding: 25px 20px;
+  }
+}

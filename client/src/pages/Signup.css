@@ -1,0 +1,228 @@
+/* =========================
+   SIGNUP PAGE LAYOUT (FIXED)
+   ========================= */
+
+.login-container.signup-container {
+  position: relative; /* override fixed */
+  justify-content: center; /* override flex-end */
+  padding-right: 0; /* remove login padding */
+  width: 100vw; /* force full width */
+}
+
+/* remove login width restriction for signup */
+.login-container.signup-container .login-col {
+  max-width: none; /* 🔥 removes 520px cap */
+  width: 100%;
+}
+
+.login-container.signup-container .login-col {
+  display: flex;
+  justify-content: center;
+}
+
+/* allow page scrolling */
+.signup-container {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 300px 60px 60px;
+  overflow-y: auto;
+
+  /* FIXED BACKGROUND */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("https://images.unsplash.com/photo-1501785888041-af3ef285b470")
+      center / cover no-repeat fixed;
+}
+
+
+
+
+.signup-header{
+
+    margin-top: -40px;
+    padding-bottom: 3px;
+}
+
+.signup-header h3 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #1e1e1e;
+}
+
+/* 🔥 SUBTITLE UPGRADE */
+.signup-header p {
+  font-size: 1.1rem;
+  font-weight: 600;                 /* stronger weight */
+  color: #0d6efd;                   /* bootstrap primary blue */
+  letter-spacing: 0.3px;
+  opacity: 0.95;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+/* signup card */
+.signup-card {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;  
+  padding: 40px 36px; /* better spacing */
+  border-radius: 18px;
+}
+
+.login-card.signup-card {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.signup-form-wrapper {
+  margin-top: 36px;   /* 🔥 perfect form spacing */
+}
+
+.signup-card .card-body {
+  padding: 48px 44px;
+}
+
+/* two-column grid */
+.signup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px 20px; /*row-gap / column-gap */
+  align-items: start;
+}
+
+/* full-width elements */
+.signup-full {
+  grid-column: span 2;
+}
+
+/* FIX floating label overlap */
+.signup-grid .form-group {
+  min-height: 72px;
+}
+
+/* textarea spacing fix */
+.signup-grid textarea.form-control {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* select dropdown fix */
+.signup-grid select.form-control {
+  height: 48px;
+}
+
+/* emergency section separation (optional later) */
+.signup-section {
+  grid-column: span 2;
+  margin-top: 12px;
+}
+
+/* INPUTS */
+.form-group input.form-control,
+.form-group select.form-control {
+  width: 100%;
+  height: 48px;
+
+  padding: 16px 14px 8px 42px; /* 🔥 correct floating-label alignment */
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+
+/* =========================
+   LOGIN REDIRECT TEXT (CTA)
+   ========================= */
+
+/* =========================
+   LOGIN REDIRECT TEXT – PREMIUM STYLE
+   ========================= */
+
+.signup-card .text-center p {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #2f2f2f;
+  margin-top: 22px;
+}
+
+/* LOGIN text */
+.signup-card .signup-link {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #5808c8;                 /* 🔥 dark neutral */
+  margin-left: 6px;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+/* underline */
+.signup-card .signup-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: #222;            /* same neutral tone */
+  opacity: 0.35;
+}
+
+/* hover effect */
+.signup-card .signup-link:hover {
+  color: #000;
+}
+
+.signup-card .signup-link:hover::after {
+  opacity: 0.7;
+}
+
+
+
+/* mobile layout */
+@media (max-width: 900px) {
+  .signup-container {
+    padding: 80px 20px 40px;
+  }
+
+  .signup-card {
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .signup-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .signup-card .card-body {
+    padding: 28px 22px;
+  }
+
+  .signup-full,
+  .signup-section {
+    grid-column: span 1;
+  }
+}
+@media (max-width: 900px) {
+  .signup-header h3 {
+    font-size: 1.8rem;
+  }
+
+  .signup-header p {
+    font-size: 0.95rem;
+  }
+}
