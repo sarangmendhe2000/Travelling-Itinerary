@@ -6,23 +6,28 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/Forgotpassword"; // ✅ ADD
+import ForgotPassword from "./pages/Forgotpassword";
 import Navbar from "./components/Navbar";
+import CreateTrip from "./pages/CreateTrip";
+
+import SavedTrips from "./pages/SavedTrips";
+import ItineraryResult from "./pages/ItineraryResult";
+import StateRecommendation from "./pages/StateRecommendation";   // ✅ ADD
 
 function AppContent() {
   const location = useLocation();
 
-  // Hide navbar on auth pages
   const hideNavbar =
     location.pathname === "/login" ||
     location.pathname === "/signup" ||
-    location.pathname === "/forgot-password"; // ✅ ADD
+    location.pathname === "/forgot-password";
 
   return (
     <>
       {!hideNavbar && <Navbar />}
 
       <Routes>
+
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
@@ -30,10 +35,17 @@ function AppContent() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/forgot-password"
-          element={<ForgotPassword />}
-        /> {/* ✅ ADD */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        <Route path="/create-trip_toggle" element={<CreateTrip />} />
+
+        {/* Saved Trips */}
+        <Route path="/my-trips" element={<SavedTrips />} />
+        <Route path="/my-trips/:id" element={<ItineraryResult />} />
+
+        {/* ✅ State Recommendation */}
+        <Route path="/recommendation/:state" element={<StateRecommendation />} />
+
       </Routes>
     </>
   );
