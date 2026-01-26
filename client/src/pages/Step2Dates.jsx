@@ -1,18 +1,20 @@
 import React from "react";
+import "./Step2Dates.css";
 
 function Step2Dates({ tripData, setTripData }) {
-
   const handleStartDate = (e) => {
     setTripData({
       ...tripData,
-      startDate: e.target.value
+      startDate: e.target.value,
     });
   };
 
   const handleEndDate = (e) => {
+    if (e.target.value < tripData.startDate) return;
+
     setTripData({
       ...tripData,
-      endDate: e.target.value
+      endDate: e.target.value,
     });
   };
 
@@ -27,34 +29,38 @@ function Step2Dates({ tripData, setTripData }) {
   };
 
   return (
-    <div>
+    <div className="step2-wrapper">
+      <h2 className="step2-title">📅 Select Trip Dates</h2>
+      <p className="step2-subtitle">Choose your travel duration</p>
 
-      <h4 className="mb-4">Select Trip Dates</h4>
+      <div className="row justify-content-center">
+        <div className="col-md-5 mb-3">
+          <label>Start Date</label>
+          <input
+            type="date"
+            className="form-control step2-input"
+            value={tripData.startDate}
+            min={new Date().toISOString().split("T")[0]}
+            onChange={handleStartDate}
+          />
+        </div>
 
-      <div className="mb-3">
-        <label className="form-label">Start Date</label>
-        <input
-          type="date"
-          className="form-control"
-          value={tripData.startDate}
-          onChange={handleStartDate}
-        />
+        <div className="col-md-5 mb-3">
+          <label>End Date</label>
+          <input
+            type="date"
+            className="form-control step2-input"
+            value={tripData.endDate}
+            min={tripData.startDate}
+            onChange={handleEndDate}
+            disabled={!tripData.startDate}
+          />
+        </div>
       </div>
 
-      <div className="mb-3">
-        <label className="form-label">End Date</label>
-        <input
-          type="date"
-          className="form-control"
-          value={tripData.endDate}
-          onChange={handleEndDate}
-        />
+      <div className="days-box">
+        Total Days: <span>{calculateDays()}</span>
       </div>
-
-      <div className="alert alert-info">
-        Total Days: <b>{calculateDays()}</b>
-      </div>
-
     </div>
   );
 }

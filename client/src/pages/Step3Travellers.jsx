@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Step3Travellers.css";
 
 function Step3Travellers({ tripData, setTripData }) {
 
@@ -7,83 +8,84 @@ function Step3Travellers({ tripData, setTripData }) {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
 
-  // Add traveller
   const addTraveller = () => {
 
-  if (!name || !age || !gender) {
-    alert("Please fill all fields");
-    return;
-  }
+    if (!name || !age || !gender) {
+      alert("Please fill all fields");
+      return;
+    }
 
-  // If Solo trip and already one traveller added
-  if (tripType === "solo" && tripData.travellers.length > 0) {
-    alert("Please select Group Trip to add more travellers");
-    return;
-  }
+    if (tripType === "solo" && tripData.travellers.length > 0) {
+      alert("Please select Group Trip to add more travellers");
+      return;
+    }
 
-  const newTraveller = { name, age, gender };
+    const newTraveller = { name, age, gender };
 
-  setTripData({
-    ...tripData,
-    travellers: [...tripData.travellers, newTraveller]
-  });
+    setTripData({
+      ...tripData,
+      travellers: [...tripData.travellers, newTraveller]
+    });
 
-  setName("");
-  setAge("");
-  setGender("");
-};
-
+    setName("");
+    setAge("");
+    setGender("");
+  };
 
   return (
-    <div>
+    <div className="step3-wrapper">
 
-      <h4 className="mb-4">Travellers Details</h4>
+      <h2 className="step3-title">👨‍👩‍👧 Travellers Details</h2>
+      <p className="step3-subtitle">Who is going on this trip?</p>
 
       {/* Trip Type */}
-      <div className="mb-3">
-        <label className="me-3">
+      <div className="trip-type-box">
+        <label>
           <input
             type="radio"
             checked={tripType === "solo"}
             onChange={() => setTripType("solo")}
-          /> Solo Trip
+          />
+          Solo Trip
         </label>
 
-        <label className="ms-4">
+        <label>
           <input
             type="radio"
             checked={tripType === "group"}
             onChange={() => setTripType("group")}
-          /> Group Trip
+          />
+          Group Trip
         </label>
       </div>
 
       {/* Traveller Form */}
-      <div className="row">
+      <div className="row justify-content-center">
 
-        <div className="col-md-4 mb-3">
+        <div className="col-md-3 mb-3">
           <input
             type="text"
-            className="form-control"
+            className="form-control step3-input"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
 
-        <div className="col-md-4 mb-3">
+        <div className="col-md-3 mb-3">
           <input
             type="number"
-            className="form-control"
+            className="form-control step3-input"
             placeholder="Age"
+            min="1"
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
         </div>
 
-        <div className="col-md-4 mb-3">
+        <div className="col-md-3 mb-3">
           <select
-            className="form-select"
+            className="form-select step3-input"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
@@ -96,24 +98,28 @@ function Step3Travellers({ tripData, setTripData }) {
 
       </div>
 
-      <button className="btn btn-success mb-3" onClick={addTraveller}>
-        Add Traveller
-      </button>
+      <div className="text-center">
+        <button className="btn btn-success px-4" onClick={addTraveller}>
+          ➕ Add Traveller
+        </button>
+      </div>
 
       {/* Traveller List */}
-      <h5>Added Travellers</h5>
+      <div className="traveller-list">
 
-      {tripData.travellers.length === 0 && (
-        <p>No travellers added</p>
-      )}
+        <h5>Added Travellers</h5>
 
-      <ul className="list-group">
+        {tripData.travellers.length === 0 && (
+          <p>No travellers added</p>
+        )}
+
         {tripData.travellers.map((t, index) => (
-          <li key={index} className="list-group-item">
-            {t.name} - {t.age} yrs - {t.gender}
-          </li>
+          <div key={index} className="traveller-card">
+            {t.name} • {t.age} yrs • {t.gender}
+          </div>
         ))}
-      </ul>
+
+      </div>
 
     </div>
   );

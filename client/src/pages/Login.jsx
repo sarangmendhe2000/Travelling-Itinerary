@@ -48,12 +48,15 @@ function Login() {
       return;
     }
 
-    // success
-    setError("");
-    console.log("Login successful:", formData);
+   // success
+setError("");
+console.log("Login successful:", formData);
 
-    // redirect (change later if needed)
-    navigate("/");
+// save login token (temporary)
+localStorage.setItem("token", "demo-token");
+
+// redirect to create trip
+navigate("/create-trip_toggle");
   };
 
   return (

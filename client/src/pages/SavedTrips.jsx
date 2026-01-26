@@ -1,48 +1,64 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./SavedTrips.css";
 
 function SavedTrips() {
 
   const navigate = useNavigate();
 
-  const [trips] = useState(() => {
+  const [trips, setTrips] = useState(() => {
     const storedTrips = localStorage.getItem("myTrips");
     return storedTrips ? JSON.parse(storedTrips) : [];
   });
 
-  return (
-    <div className="container mt-5">
+  // ✅ DELETE TRIP
+  const deleteTrip = (id, e) => {
+    e.stopPropagation();   // prevent opening card
 
-      <h2 className="mb-4">My Saved Trips</h2>
+    const updatedTrips = trips.filter(trip => trip.id !== id);
+
+    setTrips(updatedTrips);
+    localStorage.setItem("myTrips", JSON.stringify(updatedTrips));
+  };
+
+  return (
+    <div className="saved-wrapper">
+
+      <h2 className="saved-title">🧳 My Saved Trips</h2>
 
       {trips.length === 0 && (
-        <p>No trips saved yet.</p>
+        <p className="empty-text">No trips saved yet.</p>
       )}
 
-      {trips.map((trip) => (
+      <div className="saved-grid">
 
-        <div
-          key={trip.id}
-          className="card mb-3 p-3"
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate(`/my-trips/${trip.id}`)}
-        >
+        {trips.map((trip) => (
 
-          <h5>
-            {trip.tripData.places.join(", ")}
-          </h5>
+          <div
+            key={trip.id}
+            className="trip-card"
+            onClick={() => navigate(`/my-trips/${trip.id}`)}
+          >
 
-          <p>
-            {trip.tripData.startDate} → {trip.tripData.endDate}
-          </p>
+            {/* DELETE BUTTON */}
+            <span
+              className="delete-btn"
+              onClick={(e) => deleteTrip(trip.id, e)}
+            >
+              ❌
+            </span>
 
-          <p>
-            Travellers: {trip.tripData.travellers.length}
-          </p>
+            <h5>{trip.tripData.places.join(", ")}</h5>
 
-        </div>
+            <p>📅 {trip.tripData.startDate} → {trip.tripData.endDate}</p>
 
-      ))}
+            <p>👥 Travellers: {trip.tripData.travellers.length}</p>
+
+          </div>
+
+        ))}
+
+      </div>
 
     </div>
   );

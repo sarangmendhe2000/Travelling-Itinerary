@@ -1,183 +1,107 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import "./StateRecommendation.css";
 
-/* ================================
-   STATIC DATA
-================================ */
+const placeImages = {
+  Pachmarhi: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
+  Ujjain: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
 
-const stateStaticData = {
-  Maharashtra: {
-    places: [
-      {
-        name: "Mumbai",
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Pune",
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Lonavala",
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Mahabaleshwar",
-        image: "https://via.placeholder.com/300x200"
-      }
-    ],
+  Maheshwar: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
+  Bhimbetka: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
 
-    hotels: [
-      {
-        name: "Hotel Sea View",
-        city: "Mumbai",
-        price: 2500,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Royal Palace Inn",
-        city: "Pune",
-        price: 3200,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Hilltop Resort",
-        city: "Mahabaleshwar",
-        price: 4500,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Green Valley Stay",
-        city: "Lonavala",
-        price: 2800,
-        image: "https://via.placeholder.com/300x200"
-      }
-    ]
-  },
-  "Madhya Pradesh": {
-  places: [
-    { name: "Pachmarhi", image: "https://via.placeholder.com/300x200" },
-    { name: "Ujjain", image: "https://via.placeholder.com/300x200" },
-    { name: "Maheshwar", image: "https://via.placeholder.com/300x200" },
-    { name: "Bhimbetka", image: "https://via.placeholder.com/300x200" }
-  ],
-
-  hotels: [
-    {
-      name: "MP Tourism Hotel",
-      city: "Pachmarhi",
-      price: 2000,
-      image: "https://via.placeholder.com/300x200"
-    },
-    {
-      name: "Temple View Stay",
-      city: "Ujjain",
-      price: 1800,
-      image: "https://via.placeholder.com/300x200"
-    }
-  ]
-},
+  Mumbai: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
+  Pune: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
+  Lonavala: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
+  Mahabaleshwar: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
 
 
-  Goa: {
-    places: [
-      { name: "Baga Beach", image: "https://via.placeholder.com/300x200" },
-      { name: "Calangute Beach", image: "https://via.placeholder.com/300x200" },
-      { name: "Anjuna Beach", image: "https://via.placeholder.com/300x200" },
-      { name: "Panaji", image: "https://via.placeholder.com/300x200" }
-    ],
-
-    hotels: [
-      {
-        name: "Ocean Breeze Resort",
-        city: "Baga",
-        price: 3500,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Palm Beach Hotel",
-        city: "Calangute",
-        price: 2800,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Sunset View Resort",
-        city: "Anjuna",
-        price: 4200,
-        image: "https://via.placeholder.com/300x200"
-      },
-      {
-        name: "Casa De Goa",
-        city: "Panaji",
-        price: 3000,
-        image: "https://via.placeholder.com/300x200"
-      }
-    ]
-  }
+  Jaipur: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=60",
+Udaipur: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
+Jaisalmer: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
+Pushkar: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60"
 };
 
-/* ================================
-   COMPONENT
-================================ */
+const HOTEL_IMG =
+ "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=60";
+
+
+
+const stateStaticData = {
+  "Madhya Pradesh": {
+    places: ["Pachmarhi", "Ujjain", "Maheshwar", "Bhimbetka"],
+    hotels: [
+      { name: "MP Tourism Hotel", city: "Pachmarhi", price: 2000 },
+      { name: "Temple View Stay", city: "Ujjain", price: 1800 }
+    ]
+  },
+
+  Maharashtra: {
+    places: ["Mumbai", "Pune", "Lonavala", "Mahabaleshwar"],
+    hotels: [
+      { name: "Hotel Sea View", city: "Mumbai", price: 2500 },
+      { name: "Royal Palace Inn", city: "Pune", price: 3200 }
+    ]
+  }, 
+  Rajasthan: {
+  places: ["Jaipur", "Udaipur", "Jaisalmer", "Pushkar"],
+
+  hotels: [
+    { name: "Pink City Palace Hotel", city: "Jaipur", price: 2800 },
+    { name: "Lake View Resort", city: "Udaipur", price: 3200 },
+    { name: "Desert Pearl Camp", city: "Jaisalmer", price: 3500 },
+    { name: "Pushkar Heritage Stay", city: "Pushkar", price: 2200 }
+  ]
+}
+
+  
+};
+
+
 
 function StateRecommendation() {
+
   const { state } = useParams();
-  const stateKey = Object.keys(stateStaticData).find(
-  key => key.toLowerCase() === state.toLowerCase()
-);
 
-const stateInfo = stateStaticData[stateKey];
+  const stateKey = Object.keys(stateStaticData)
+    .find(k => k.toLowerCase() === state.toLowerCase());
 
+  const stateInfo = stateStaticData[stateKey];
 
   if (!stateInfo) {
-    return <h3 className="mt-5 text-center">No Data Found</h3>;
+    return <h3 className="text-center mt-5">No Data Found</h3>;
   }
 
   return (
-    <div className="container mt-5">
+    <div className="state-page">
 
-      {/* ✅ Welcome Message */}
-      <h2 className="mb-4 text-center">
-        Welcome to {state}
-      </h2>
+      {/* HERO */}
+      <div className="state-hero">
+        <h1>Welcome to {state}</h1>
+        <p>Best places & hotel suggestions</p>
+      </div>
 
-      {/* ✅ Famous Places */}
-      <h4 className="mb-3">Famous Tourist Places</h4>
+      {/* PLACES */}
+      <h2 className="section-title">Famous Tourist Places</h2>
 
-      <div className="row mb-5">
-        {stateInfo.places.map((place, index) => (
-          <div key={index} className="col-md-3">
-            <div className="card">
-              <img
-                src={place.image}
-                className="card-img-top"
-                alt={place.name}
-              />
-              <div className="card-body text-center">
-                <h6>{place.name}</h6>
-              </div>
-            </div>
+      <div className="grid">
+        {stateInfo.places.map((p, i) => (
+          <div className="card-box" key={i}>
+            <img src={placeImages[p]} alt={p} />
+            <h4>{p}</h4>
           </div>
         ))}
       </div>
 
-      {/* ✅ Hotels */}
-      <h4 className="mb-3">Hotel Suggestions</h4>
+      {/* HOTELS */}
+      <h2 className="section-title">Hotel Suggestions</h2>
 
-      <div className="row">
-        {stateInfo.hotels.map((hotel, index) => (
-          <div key={index} className="col-md-3">
-            <div className="card">
-              <img
-                src={hotel.image}
-                className="card-img-top"
-                alt={hotel.name}
-              />
-              <div className="card-body text-center">
-                <h6>{hotel.name}</h6>
-                <p>{hotel.city}</p>
-                <p>₹{hotel.price} / night</p>
-              </div>
-            </div>
+      <div className="grid">
+        {stateInfo.hotels.map((h, i) => (
+          <div className="card-box" key={i}>
+            <img src={HOTEL_IMG} alt={h.name} />
+            <h4>{h.name}</h4>
+            <p>{h.city}</p>
+            <p className="price">₹{h.price} / night</p>
           </div>
         ))}
       </div>

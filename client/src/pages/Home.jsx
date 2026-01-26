@@ -1,22 +1,50 @@
+import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
 
   const navigate = useNavigate();
 
+  // Create Trip requires login
+  const handleCreateTrip = () => {
+    const isLoggedIn = localStorage.getItem("token");
+
+    if (isLoggedIn) {
+      navigate("/create-trip_toggle");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
-    <div className="container mt-5 text-center">
+    <div className="home-hero">
 
-      <h1>Welcome to the Website</h1>
-      <p>This is the Home page.</p>
+      <div className="hero-content">
 
-      {/* ✅ CREATE TRIP BUTTON */}
-      <button
-        className="btn btn-primary mt-4"
-        onClick={() => navigate("/create-trip_toggle")}
-      >
-        Create Trip
-      </button>
+        <h1>Your Journey, Your Story</h1>
+        <p>Choose Your Favorite Destination</p>
+
+        <div className="hero-buttons">
+
+          {/* Explore Page */}
+          <button
+            className="hero-btn primary"
+            onClick={() => navigate("/explore")}
+          >
+            Explore Now
+          </button>
+
+          {/* Create Trip */}
+          <button
+            className="hero-btn secondary"
+            onClick={handleCreateTrip}
+          >
+            Create Trip
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
   );

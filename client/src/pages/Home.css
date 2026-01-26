@@ -1,0 +1,75 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-hero{
+  min-height: 100vh;
+  width: 100vw;
+
+  background-image: url("../assets/images/homePage.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+}
+
+.hero-content{
+  position:relative;
+  text-align:center;
+  color:white;
+  z-index:2;
+}
+
+.hero-content h1{
+  font-size:3.2rem;
+  margin-bottom:15px;
+  font-family:'Playfair Display', serif;
+}
+
+.hero-content p{
+  font-size:1.2rem;
+  margin-bottom:35px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+}
+
+.hero-btn{
+  padding:12px 35px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.hero-btn.primary{
+  background:#0d6efd;
+  color:white;
+}
+
+.hero-btn.secondary{
+  background:white;
+  color:#0d6efd;
+}
+
+.hero-btn:hover{
+  transform:translateY(-3px);
+  opacity:0.9;
+}

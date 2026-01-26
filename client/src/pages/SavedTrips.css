@@ -1,0 +1,60 @@
+.saved-wrapper{
+  padding:120px 8% 80px;
+  background:#f4f7fb;
+  min-height:100vh;
+}
+
+.saved-title{
+  text-align:center;
+  font-size:2.4rem;
+  margin-bottom:40px;
+  font-family:'Playfair Display', serif;
+}
+
+.empty-text{
+  text-align:center;
+  font-size:1.2rem;
+  color:gray;
+}
+
+/* GRID */
+.saved-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+/* CARD */
+.trip-card{
+  background:rgba(255,255,255,0.9);
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.trip-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 12px 28px rgba(0,0,0,0.3);
+}
+
+.trip-card h5{
+  margin-bottom:10px;
+}
+
+.trip-card p{
+  margin:5px 0;
+}
+
+.delete-btn{
+  position:absolute;
+  top:12px;
+  right:12px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.trip-card{
+  position:relative;
+}

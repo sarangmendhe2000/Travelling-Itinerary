@@ -1,67 +1,64 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "./ItineraryResult.css";
 
 // Static attraction data
 const attractionData = {
   Jaipur: {
     day: ["Amer Fort", "City Palace"],
-    evening: ["Hawa Mahal", "Local Market"]
+    evening: ["Hawa Mahal", "Local Market"],
   },
   Pachmarhi: {
     day: ["Bee Falls", "Pandav Caves"],
-    evening: ["Sunset Point"]
+    evening: ["Sunset Point"],
   },
   Ujjain: {
     day: ["Mahakaleshwar Temple"],
-    evening: ["Ram Ghat Aarti"]
+    evening: ["Ram Ghat Aarti"],
   },
   Maheshwar: {
     day: ["Maheshwar Fort"],
-    evening: ["Narmada Ghat"]
-  }
+    evening: ["Narmada Ghat"],
+  },
 };
 
 function ItineraryResult({ tripData }) {
-
   const { id } = useParams();
-  const navigate = useNavigate();   // ✅ ADD
+  const navigate = useNavigate();
 
-  // If tripData not passed, load from localStorage
   let finalTripData = tripData;
 
-  if (!finalTripData && id) {
-
+  if ((!finalTripData || !finalTripData.places) && id) {
     const trips = JSON.parse(localStorage.getItem("myTrips")) || [];
-
-    const foundTrip = trips.find(t => t.id.toString() === id);
-
+    const foundTrip = trips.find((t) => t.id.toString() === id);
     if (foundTrip) {
       finalTripData = foundTrip.tripData;
     }
   }
 
-  if (!finalTripData) {
+  if (
+    !finalTripData ||
+    !finalTripData.places ||
+    finalTripData.places.length === 0
+  ) {
     return <h3 className="text-center mt-5">Trip not found</h3>;
   }
 
   const generateItinerary = () => {
-
     let result = [];
 
     finalTripData.places.forEach((place, index) => {
-
       const data = attractionData[place] || {
         day: ["Local Sightseeing"],
-        evening: ["Free Time"]
+        evening: ["Free Time"],
       };
 
       result.push({
         dayNumber: index + 1,
         city: place,
         dayPlaces: data.day,
-        eveningPlaces: data.evening
+        eveningPlaces: data.evening,
       });
-
     });
 
     return result;
@@ -69,9 +66,7 @@ function ItineraryResult({ tripData }) {
 
   const itinerary = generateItinerary();
 
-  // ✅ SAVE + REDIRECT
   const saveTrip = () => {
-
     let trips = JSON.parse(localStorage.getItem("myTrips")) || [];
 
     const tripId = new Date().getTime();
@@ -79,54 +74,53 @@ function ItineraryResult({ tripData }) {
     const newTrip = {
       id: tripId,
       tripData: finalTripData,
-      itinerary: itinerary
+      itinerary: itinerary,
     };
 
     trips.push(newTrip);
-
     localStorage.setItem("myTrips", JSON.stringify(trips));
 
     alert("Trip saved successfully!");
 
-    // Redirect to State Recommendation Page
     navigate(`/recommendation/${finalTripData.state}`);
   };
 
   return (
-    <div className="container mt-5">
-
-      <h4 className="mb-4">Our Recommended Itinerary</h4>
+    <div className="itinerary-wrapper">
+      <h2 className="itinerary-title">🗺 Your Trip Itinerary</h2>
+      <p className="itinerary-subtitle">Day wise travel plan</p>
 
       {itinerary.map((item) => (
-        <div key={item.dayNumber} className="card mb-3 p-3">
+        <div key={item.dayNumber} className="day-card">
+          <h4>
+            Day {item.dayNumber} - {item.city}
+          </h4>
 
-          <h5>Day {item.dayNumber} - {item.city}</h5>
+          <div className="session">
+            <b>🌞 Day Time</b>
+            <ul>
+              {item.dayPlaces.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+          </div>
 
-          <p><b>Day Time:</b></p>
-          <ul>
-            {item.dayPlaces.map((p, i) => (
-              <li key={i}>{p}</li>
-            ))}
-          </ul>
-
-          <p><b>Evening:</b></p>
-          <ul>
-            {item.eveningPlaces.map((p, i) => (
-              <li key={i}>{p}</li>
-            ))}
-          </ul>
-
+          <div className="session">
+            <b>🌙 Evening</b>
+            <ul>
+              {item.eveningPlaces.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       ))}
 
-      {/* ✅ SAVE BUTTON */}
-      <button
-        className="btn btn-primary mt-3"
-        onClick={saveTrip}
-      >
-        Save Trip & View State Info
-      </button>
-
+      <div className="text-center">
+        <button className="btn btn-primary save-btn" onClick={saveTrip}>
+          💾 Save Trip & View State Info
+        </button>
+      </div>
     </div>
   );
 }
