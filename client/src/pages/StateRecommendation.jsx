@@ -53,6 +53,30 @@ const stateStaticData = {
       }
     ]
   },
+  "Madhya Pradesh": {
+  places: [
+    { name: "Pachmarhi", image: "https://via.placeholder.com/300x200" },
+    { name: "Ujjain", image: "https://via.placeholder.com/300x200" },
+    { name: "Maheshwar", image: "https://via.placeholder.com/300x200" },
+    { name: "Bhimbetka", image: "https://via.placeholder.com/300x200" }
+  ],
+
+  hotels: [
+    {
+      name: "MP Tourism Hotel",
+      city: "Pachmarhi",
+      price: 2000,
+      image: "https://via.placeholder.com/300x200"
+    },
+    {
+      name: "Temple View Stay",
+      city: "Ujjain",
+      price: 1800,
+      image: "https://via.placeholder.com/300x200"
+    }
+  ]
+},
+
 
   Goa: {
     places: [
@@ -97,7 +121,12 @@ const stateStaticData = {
 
 function StateRecommendation() {
   const { state } = useParams();
-  const stateInfo = stateStaticData[state];
+  const stateKey = Object.keys(stateStaticData).find(
+  key => key.toLowerCase() === state.toLowerCase()
+);
+
+const stateInfo = stateStaticData[stateKey];
+
 
   if (!stateInfo) {
     return <h3 className="mt-5 text-center">No Data Found</h3>;
