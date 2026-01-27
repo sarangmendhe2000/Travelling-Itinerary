@@ -1,0 +1,66 @@
+.trip-page {
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* HERO SECTION */
+.trip-hero {
+height: 70vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;   
+}
+
+.trip-hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.trip-hero p {
+  font-size: 18px;
+}
+
+/* CONTENT */
+.trip-content {
+  max-width: 800px;
+  margin: -100px auto 50px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.trip-content h2 {
+  margin-bottom: 20px;
+}
+
+/* ITINERARY LIST */
+.day-list {
+  list-style: none;
+  padding: 0;
+}
+
+.day-list li {
+  background: #f5f7fa;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+/* BACK LINK */
+.back-link {
+  display: inline-block;
+  margin-top: 25px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}

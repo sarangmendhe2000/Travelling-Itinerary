@@ -9,11 +9,12 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/Forgotpassword";
 import Navbar from "./components/Navbar";
 import CreateTrip from "./pages/CreateTrip";
-
 import SavedTrips from "./pages/SavedTrips";
 import ItineraryResult from "./pages/ItineraryResult";
 import StateRecommendation from "./pages/StateRecommendation";   // ✅ ADD
 import Explore from "./pages/Explore";
+import TripDetails from "./pages/TripDetails";
+
 
 function AppContent() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function AppContent() {
         <Route path="/recommendation/:state" element={<StateRecommendation />} />
 
         <Route path="/Explore" element={<Explore />} />
+        <Route path="/trip/:tripId" element={<TripDetails />} />
 
       </Routes>
     </>
