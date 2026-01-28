@@ -57,17 +57,17 @@ const TripDetails = () => {
         className="trip-hero"
         style={{
           backgroundImage: `linear-gradient(
-            rgba(0,0,0,0.5),
-            rgba(0,0,0,0.5)
+            rgba(0,0,0,0.1),
+            rgba(0,0,0,0.1)
           ), url(${trip.heroImage})`,
         }}
       >
-        <h1>{trip.title}</h1>
+        <h2>{trip.title}</h2>
         <p>Your perfect travel plan</p>
       </div>
 
       <div className="trip-content">
-        <h2>Day-wise Itinerary</h2>
+        <h3>Day-wise Itinerary</h3>
 
         <ul className="day-list">
           {trip.days.map((day, index) => (

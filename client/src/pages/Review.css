@@ -10,28 +10,28 @@
 
 .review-subtitle {
   color: gray;
-  margin-bottom: 25px;
+  margin-bottom: 1px;
 }
 
 .review-section {
   background: rgba(255,255,255,0.85);
-  padding: 18px;
+  padding: 2px;
   border-radius: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
 }
 
 .review-item {
-  margin-top: 6px;
+  margin-top: 1px;
 }
 
 /* Estimated Budget */
 .estimate-box {
-  margin-top: 25px;
+  margin-top: 2px;
   background: linear-gradient(to right, #0077ff, #00c6ff);
   color: white;
-  padding: 16px;
+  padding: 2px;
   border-radius: 14px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 

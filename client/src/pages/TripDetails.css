@@ -15,9 +15,9 @@ height: 70vh;
   text-align: center;   
 }
 
-.trip-hero h1 {
+.trip-hero h2 {
   font-size: 48px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 
 .trip-hero p {
@@ -29,13 +29,13 @@ height: 70vh;
   max-width: 800px;
   margin: -100px auto 50px;
   background: white;
-  padding: 15px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .trip-content h2 {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 /* ITINERARY LIST */
@@ -46,7 +46,7 @@ height: 70vh;
 
 .day-list li {
   background: #f5f7fa;
-  padding: 15px 20px;
+  padding: 4px 8px;
   border-radius: 10px;
   margin-bottom: 12px;
   font-size: 16px;
@@ -55,7 +55,7 @@ height: 70vh;
 /* BACK LINK */
 .back-link {
   display: inline-block;
-  margin-top: 25px;
+  margin-top: -40px;
   color: #007bff;
   text-decoration: none;
   font-weight: 500;

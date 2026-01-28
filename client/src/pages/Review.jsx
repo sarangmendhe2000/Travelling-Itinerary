@@ -6,7 +6,7 @@ function Review({ tripData }) {
   return (
     <div className="review-wrapper">
 
-      <h2 className="review-title">📝 Review Your Trip</h2>
+      <h3 className="review-title">📝 Review Your Trip</h3>
       <p className="review-subtitle">Please verify all details</p>
 
       {/* Destination */}
