@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./auth.css"; // reuse login styles (twin UI)
 import "./signup.css";
+import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function Signup() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     for (let key in formData) {
@@ -60,10 +61,31 @@ function Signup() {
       );
       return;
     }
+    console.log("BUTTON CLICKED");
 
-    setError("");
-    console.log("Signup Data:", formData);
-    navigate("/login");
+    try {
+      const response = await axios.post(
+        "http://localhost:5223/api/Auth/register",
+        {
+          fullName: formData.fullName,
+          dob: formData.dob,
+          gender: formData.gender,
+          email: formData.email,
+          phone: formData.phone,
+          passwordHash: formData.password,
+          address: formData.address,
+          emergencyName: formData.emergencyName,
+          emergencyPhone: formData.emergencyPhone,
+        },
+      );
+      console.log("SENDING REQUEST");
+
+      alert(response.data); // User registered successfully
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      setError("Server error");
+    }
   };
 
   const handleNumberChange = (e) => {
@@ -270,6 +292,9 @@ function Signup() {
                     >
                       Login
                     </span>
+                  </p>
+                  <p className="back-home-signup" onClick={() => navigate("/")}>
+                    ← Back to Home
                   </p>
                 </div>
               </form>

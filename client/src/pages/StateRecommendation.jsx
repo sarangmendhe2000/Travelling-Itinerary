@@ -1,65 +1,142 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./StateRecommendation.css";
 
+/* =======================
+   PLACE IMAGES
+======================= */
+
 const placeImages = {
-  Pachmarhi: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
-  Ujjain: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
 
-  Maheshwar: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
-  Bhimbetka: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
+  // INDIA
+  Jaipur: "https://images.unsplash.com/photo-1564501049412-61c2a3083791",
+  Udaipur: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Jaisalmer: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
 
-  Mumbai: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
-  Pune: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
-  Lonavala: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
-  Mahabaleshwar: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
+  Bhopal: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Indore: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Jabalpur: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
 
+  Mumbai: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Pune: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Nagpur: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
 
-  Jaipur: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=60",
-Udaipur: "https://images.unsplash.com/photo-1532009324734-20a7a5813719?auto=format&fit=crop&w=800&q=60",
-Jaisalmer: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
-Pushkar: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60"
+  Bangalore: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Mysore: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Coorg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+
+  Chennai: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Ooty: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Madurai: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+
+  // AUSTRALIA
+  Sydney: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Newcastle: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Wollongong: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+
+  Melbourne: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Geelong: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Ballarat: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+
+  Brisbane: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  "Gold Coast": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+  Cairns: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+
+  Perth: "https://images.unsplash.com/photo-1532009324734-20a7a5813719",
+  Fremantle: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  Bunbury: "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
 };
 
 const HOTEL_IMG =
- "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=60";
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945";
 
-
+/* =======================
+   STATE STATIC DATA
+======================= */
 
 const stateStaticData = {
-  "Madhya Pradesh": {
-    places: ["Pachmarhi", "Ujjain", "Maheshwar", "Bhimbetka"],
+
+  // INDIA
+  Rajasthan: {
+    places: ["Jaipur", "Udaipur", "Jaisalmer"],
     hotels: [
-      { name: "MP Tourism Hotel", city: "Pachmarhi", price: 2000 },
-      { name: "Temple View Stay", city: "Ujjain", price: 1800 }
+      { name: "Pink City Palace Hotel", city: "Jaipur", price: 2800 },
+      { name: "Lake View Resort", city: "Udaipur", price: 3200 }
+    ]
+  },
+
+  "Madhya Pradesh": {
+    places: ["Bhopal", "Indore", "Jabalpur"],
+    hotels: [
+      { name: "MP Tourism Hotel", city: "Bhopal", price: 2000 },
+      { name: "Central Residency", city: "Indore", price: 2200 }
     ]
   },
 
   Maharashtra: {
-    places: ["Mumbai", "Pune", "Lonavala", "Mahabaleshwar"],
+    places: ["Mumbai", "Pune", "Nagpur"],
     hotels: [
-      { name: "Hotel Sea View", city: "Mumbai", price: 2500 },
-      { name: "Royal Palace Inn", city: "Pune", price: 3200 }
+      { name: "Sea View Hotel", city: "Mumbai", price: 3000 },
+      { name: "Royal Palace Inn", city: "Pune", price: 2600 }
     ]
-  }, 
-  Rajasthan: {
-  places: ["Jaipur", "Udaipur", "Jaisalmer", "Pushkar"],
+  },
 
-  hotels: [
-    { name: "Pink City Palace Hotel", city: "Jaipur", price: 2800 },
-    { name: "Lake View Resort", city: "Udaipur", price: 3200 },
-    { name: "Desert Pearl Camp", city: "Jaisalmer", price: 3500 },
-    { name: "Pushkar Heritage Stay", city: "Pushkar", price: 2200 }
-  ]
-}
+  Karnataka: {
+    places: ["Bangalore", "Mysore", "Coorg"],
+    hotels: [
+      { name: "ITC Gardenia", city: "Bangalore", price: 3500 },
+      { name: "Mysore Palace Hotel", city: "Mysore", price: 2500 }
+    ]
+  },
 
-  
+  "Tamil Nadu": {
+    places: ["Chennai", "Ooty", "Madurai"],
+    hotels: [
+      { name: "Beach Residency", city: "Chennai", price: 2800 },
+      { name: "Hill View Resort", city: "Ooty", price: 2600 }
+    ]
+  },
+
+  // AUSTRALIA
+  Queensland: {
+    places: ["Brisbane", "Gold Coast", "Cairns"],
+    hotels: [
+      { name: "Brisbane City Hotel", city: "Brisbane", price: 4500 },
+      { name: "Gold Coast Resort", city: "Gold Coast", price: 5200 }
+    ]
+  },
+
+  "Western Australia": {
+    places: ["Perth", "Fremantle", "Bunbury"],
+    hotels: [
+      { name: "Perth Central Hotel", city: "Perth", price: 4700 },
+      { name: "Ocean View Resort", city: "Fremantle", price: 5000 }
+    ]
+  },
+
+  "New South Wales": {
+    places: ["Sydney", "Newcastle", "Wollongong"],
+    hotels: [
+      { name: "Sydney Harbour Hotel", city: "Sydney", price: 5500 },
+      { name: "Newcastle Beach Resort", city: "Newcastle", price: 4800 }
+    ]
+  },
+
+  Victoria: {
+    places: ["Melbourne", "Geelong", "Ballarat"],
+    hotels: [
+      { name: "Melbourne Grand Hotel", city: "Melbourne", price: 5200 },
+      { name: "Victoria Palace Inn", city: "Geelong", price: 4600 }
+    ]
+  }
+
 };
 
-
+/* ======================= */
 
 function StateRecommendation() {
 
+  const navigate = useNavigate();
   const { state } = useParams();
 
   const stateKey = Object.keys(stateStaticData)
@@ -67,20 +144,23 @@ function StateRecommendation() {
 
   const stateInfo = stateStaticData[stateKey];
 
-  if (!stateInfo) {
-    return <h3 className="text-center mt-5">No Data Found</h3>;
-  }
+  // ✅ SAFE REDIRECT
+  useEffect(() => {
+    if (!stateInfo) {
+      navigate("/my-trips");
+    }
+  }, [stateInfo, navigate]);
+
+  if (!stateInfo) return null;
 
   return (
     <div className="state-page">
 
-      {/* HERO */}
       <div className="state-hero">
-        <h1>Welcome to {state}</h1>
+        <h1>Welcome to {stateKey}</h1>
         <p>Best places & hotel suggestions</p>
       </div>
 
-      {/* PLACES */}
       <h2 className="section-title">Famous Tourist Places</h2>
 
       <div className="grid">
@@ -92,7 +172,6 @@ function StateRecommendation() {
         ))}
       </div>
 
-      {/* HOTELS */}
       <h2 className="section-title">Hotel Suggestions</h2>
 
       <div className="grid">

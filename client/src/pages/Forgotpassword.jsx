@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./auth.css";
+import axios from "axios";
+
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -17,65 +19,103 @@ function ForgotPassword() {
   const [showPassword, setShowPassword] = useState(false);
 
   // sample OTP (frontend demo)
-  const SAMPLE_OTP = "12345";
+  // const SAMPLE_OTP = "12345";
 
   /* =====================
      HANDLERS
      ===================== */
 
-  const handleSendOtp = (e) => {
-    e.preventDefault();
+  const handleSendOtp = async (e) => {
+  e.preventDefault();
 
-    if (!email) {
-      setError("Please enter your email address");
-      return;
-    }
+  if (!email) {
+    setError("Please enter your email address");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "https://localhost:7013/api/auth/forgot-password",
+      { email }
+    );
 
     setError("");
-    console.log("OTP sent to:", email, "| OTP:", SAMPLE_OTP);
     setStep("otp");
-  };
+  } catch (err) {
+    setError(err.response?.data || "Server error");
+  }
+};
 
-  const handleVerifyOtp = (e) => {
-    e.preventDefault();
 
-    if (!otp) {
-      setError("Please enter OTP");
-      return;
-    }
+ const handleVerifyOtp = async (e) => {
+  e.preventDefault();
 
-    if (otp !== SAMPLE_OTP) {
-      setError("Invalid OTP. Please try again.");
-      return; // ❌ stay on OTP screen
-    }
+  if (!otp) {
+    setError("Please enter OTP");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "https://localhost:7013/api/auth/verify-otp",
+      {
+        email,
+        otp
+      }
+    );
 
     setError("");
-    setStep("reset"); // ✅ move forward
-  };
+    setStep("reset");
+  } catch (err) {
+    setError(err.response?.data || "Invalid OTP");
+  }
+};
 
-  const handleResendOtp = () => {
+
+  const handleResendOtp = async () => {
+  try {
+    await axios.post(
+      "https://localhost:7013/api/auth/forgot-password",
+      { email }
+    );
+
     setOtp("");
     setError("A new OTP has been sent to your email");
-    console.log("OTP resent:", SAMPLE_OTP);
-  };
+  } catch (err) {
+    setError(err.response?.data || "Unable to resend OTP");
+  }
+};
 
-  const handleResetPassword = (e) => {
-    e.preventDefault();
 
-    if (!password || !confirmPassword) {
-      setError("All fields are required");
-      return;
-    }
+  const handleResetPassword = async (e) => {
+  e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+  if (!password || !confirmPassword) {
+    setError("All fields are required");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
+
+  try {
+    await axios.post(
+      "https://localhost:7013/api/auth/reset-password",
+      {
+        email,
+        newPassword: password
+      }
+    );
 
     setError("");
-    console.log("Password reset successful");
     setStep("success");
-  };
+  } catch (err) {
+    setError(err.response?.data || "Server error");
+  }
+};
+
 
   /* =====================
      UI
@@ -133,7 +173,7 @@ function ForgotPassword() {
                   placeholder=" "
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  maxLength={5}
+                  maxLength={6}
                 />
                 <label>Enter OTP</label>
               </div>

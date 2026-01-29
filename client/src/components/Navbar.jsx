@@ -1,59 +1,53 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
 
 function Navbar() {
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top w-100">
-      <div className="container-fluid">
+    <nav className="custom-navbar">
 
-        <Link className="navbar-brand fw-bold" to="/">
-          MyApp
+      <div className="nav-left">
+        <Link to="/" className="brand">
+          TravelPlanner
         </Link>
+      </div>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+      <div className="nav-right">
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+        <Link to="/" className="nav-link-item">Home</Link>
+        <Link to="/services" className="nav-link-item">Services</Link>
+        <Link to="/about" className="nav-link-item">About</Link>
+        <Link to="/contact" className="nav-link-item">Contact</Link>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
+        {token && (
+          <Link to="/my-trips" className="nav-link-item">
+            My Trips
+          </Link>
+        )}
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/services">Services</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">Contact</Link>
-            </li>
-
-            {/* ✅ NEW */}
-            <li className="nav-item">
-              <Link className="nav-link" to="/my-trips">
-                My Trips
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link btn btn-outline-light ms-2 px-3" to="/login">
-                Login
-              </Link>
-            </li>
-
-          </ul>
-        </div>
+        {token ? (
+          <button className="nav-btn logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        ) : (
+          <button
+            className="nav-btn login-btn"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+        )}
 
       </div>
+
     </nav>
   );
 }

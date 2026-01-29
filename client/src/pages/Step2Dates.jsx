@@ -2,20 +2,21 @@ import React from "react";
 import "./Step2Dates.css";
 
 function Step2Dates({ tripData, setTripData }) {
+
   const handleStartDate = (e) => {
-    setTripData({
-      ...tripData,
+    setTripData(prev => ({
+      ...prev,
       startDate: e.target.value,
-    });
+    }));
   };
 
   const handleEndDate = (e) => {
     if (e.target.value < tripData.startDate) return;
 
-    setTripData({
-      ...tripData,
+    setTripData(prev => ({
+      ...prev,
       endDate: e.target.value,
-    });
+    }));
   };
 
   const calculateDays = () => {

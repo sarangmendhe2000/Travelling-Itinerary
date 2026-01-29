@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./auth.css";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,42 +22,38 @@ function Login() {
     });
   };
 
-  // Handle submit (UI-level validation only)
-  const handleSubmit = (e) => {
+  // Handle submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // basic validation
     if (!formData.email || !formData.password) {
-      setError("Invalid email or password");
+      setError("Email and password required");
       return;
     }
 
-    /* 
-      TEMPORARY LOGIC
-      ----------------
-      Replace this block with backend API call later
-    */
+    try {
+      const response = await axios.post(
+        "http://localhost:5223/api/Auth/login",
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+      );
 
-    const DEMO_EMAIL = "admin@gmail.com";
-    const DEMO_PASSWORD = "Admin@123";
+      // Save login info
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userId", response.data.userId);
+      localStorage.setItem("fullName", response.data.fullName);
 
-    if (
-      formData.email !== DEMO_EMAIL ||
-      formData.password !== DEMO_PASSWORD
-    ) {
-      setError("Invalid email or password");
-      return;
+      setError("");
+      navigate("/create-trip_toggle");
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data);
+      } else {
+        setError("Server error");
+      }
     }
-
-   // success
-setError("");
-console.log("Login successful:", formData);
-
-// save login token (temporary)
-localStorage.setItem("token", "demo-token");
-
-// redirect to create trip
-navigate("/create-trip_toggle");
   };
 
   return (
@@ -64,18 +61,14 @@ navigate("/create-trip_toggle");
       <div className="login-col">
         <div className="card login-card shadow">
           <div className="card-body">
-            <h3 className="text-center mb-1 welcome-animate">
-              Welcome Back
-            </h3>
+            <h3 className="text-center mb-1 welcome-animate">Welcome Back</h3>
 
             <p className="text-center text-muted mb-4 subtitle-animate">
               Login to your account
             </p>
 
             {error && (
-              <div className="alert alert-danger text-center">
-                {error}
-              </div>
+              <div className="alert alert-danger text-center">{error}</div>
             )}
 
             <form onSubmit={handleSubmit}>
@@ -109,9 +102,7 @@ navigate("/create-trip_toggle");
                 <label>Password</label>
 
                 <i
-                  className={`bi ${
-                    showPassword ? "bi-eye-slash" : "bi-eye"
-                  }`}
+                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
                   onClick={() => setShowPassword(!showPassword)}
                 ></i>
               </div>
@@ -127,14 +118,19 @@ navigate("/create-trip_toggle");
               </div>
 
               {/* Submit */}
-              <button className="btn btn-primary w-100">
-                Login
+              <button className="btn btn-primary w-100">Login</button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary w-100 mt-2"
+                onClick={() => navigate("/")}
+              >
+                Back to Home
               </button>
 
               {/* Signup */}
               <div className="text-center mt-3">
                 <p>
-                  Don&apos;t have an account?{" "}
+                  Don't have an account?{" "}
                   <span
                     className="signup-link"
                     onClick={() => navigate("/signup")}
@@ -142,6 +138,7 @@ navigate("/create-trip_toggle");
                     Sign up
                   </span>
                 </p>
+                
               </div>
             </form>
           </div>

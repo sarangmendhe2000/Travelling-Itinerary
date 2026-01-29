@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import "./TripDetails.css";
 
+
+
 const tripData = {
   goa: {
     title: "3 Days in Goa",
