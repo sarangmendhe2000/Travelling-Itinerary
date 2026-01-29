@@ -1,8 +1,8 @@
+
 body {
   margin: 0;
-  padding-top: 100px; /* navbar height */
-  
 }
+
 .create-trip-wrapper {
   width: 100vw;
   min-height: 100vh;
@@ -12,7 +12,9 @@ body {
   max-width: 100%;
 }
 
-.page-offset {
-  margin-top: 80px;   /* height of navbar */
-}
-  
+
+/* Global space below fixed navbar */
+/* .page-container {
+  padding-top: 60px;   /* same as navbar height */
+/* } */
+

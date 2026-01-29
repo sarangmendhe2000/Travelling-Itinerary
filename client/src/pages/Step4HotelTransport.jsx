@@ -9,7 +9,7 @@ function Step4HotelTransport({ tripData, setTripData }) {
   const selectHotel = (type) => {
     setTripData(prev => ({
       ...prev,
-      hotelType: type,
+      hotelType: type
     }));
   };
 
@@ -17,7 +17,7 @@ function Step4HotelTransport({ tripData, setTripData }) {
   const selectTransport = (mode) => {
     setTripData(prev => ({
       ...prev,
-      transport: mode,
+      transport: mode
     }));
   };
 
@@ -28,36 +28,40 @@ function Step4HotelTransport({ tripData, setTripData }) {
 
     const start = new Date(tripData.startDate);
     const end = new Date(tripData.endDate);
+
     const days =
       Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
     const travellers = tripData.travellers.length || 1;
 
-    // 🇮🇳 India hotel rates
+    // 🇮🇳 India Hotel (per night)
     const hotelRatesIndia = {
       Budget: 800,
       Standard: 1500,
-      Luxury: 3000,
+      Luxury: 3000
     };
 
-    // 🌍 International hotel rates
+    // 🌍 International Hotel (per night)
     const hotelRatesInternational = {
       Budget: 3000,
       Standard: 6000,
-      Luxury: 10000,
+      Luxury: 10000
     };
 
-    // 🇮🇳 India transport
+    // 🇮🇳 India Transport (per person)
     const transportRatesIndia = {
       Flight: 5000,
       Train: 1500,
       Bus: 800,
-      Cab: 2000,
+      Cab: 2000
     };
 
-    // 🌍 International transport
+    // 🌍 International Transport (per person)
     const transportRatesInternational = {
       Flight: 25000,
+      Train: 12000,
+      Bus: 8000,
+      Cab: 10000
     };
 
     const hotelRates = isIndia
@@ -68,18 +72,14 @@ function Step4HotelTransport({ tripData, setTripData }) {
       ? transportRatesIndia
       : transportRatesInternational;
 
-    let hotelCost =
+    const hotelCost =
       (hotelRates[tripData.hotelType] || 0) *
       days *
       travellers;
 
-    let transportCost = 0;
-
-    if (tripData.transport) {
-      transportCost =
-        (transportRates[tripData.transport] || 0) *
-        travellers;
-    }
+    const transportCost =
+      (transportRates[tripData.transport] || 0) *
+      travellers;
 
     const estimated = Math.round(hotelCost + transportCost);
 
@@ -98,7 +98,7 @@ function Step4HotelTransport({ tripData, setTripData }) {
     setTripData(prev => ({
       ...prev,
       estimatedBudget: estimated,
-      budgetRange: budgetRange,
+      budgetRange
     }));
 
   }, [
@@ -135,8 +135,7 @@ function Step4HotelTransport({ tripData, setTripData }) {
       {/* TRANSPORT */}
       <h5 className="section-title">Transport Preference</h5>
       <div className="option-row">
-
-        {isIndia && ["Flight", "Train", "Bus", "Cab"].map(mode => (
+        {["Flight", "Train", "Bus", "Cab"].map(mode => (
           <div
             key={mode}
             className={`option-card ${
@@ -147,18 +146,6 @@ function Step4HotelTransport({ tripData, setTripData }) {
             {mode}
           </div>
         ))}
-
-        {!isIndia && (
-          <div
-            className={`option-card ${
-              tripData.transport === "Flight" ? "active" : ""
-            }`}
-            onClick={() => selectTransport("Flight")}
-          >
-            Flight
-          </div>
-        )}
-
       </div>
 
       {/* BUDGET */}

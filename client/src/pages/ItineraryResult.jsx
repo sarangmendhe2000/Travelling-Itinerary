@@ -265,7 +265,7 @@ const attractionData = {
 
 };
 
-
+// ----------------------------------------------------
 
 function ItineraryResult({ tripData }) {
 
@@ -284,9 +284,7 @@ function ItineraryResult({ tripData }) {
 
         const res = await axios.get(
           `http://localhost:5223/api/Trips/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         setDbTrip(res.data);
@@ -298,14 +296,10 @@ function ItineraryResult({ tripData }) {
     fetchTrip();
   }, [id]);
 
-  // ---------------- GENERATE ITINERARY ----------------
+  // ---------------- GENERATE FUNCTION ----------------
   const generateItinerary = () => {
 
-    console.log("PLACES RECEIVED:", tripData.places);
-
-    if (!tripData.places || tripData.places.length === 0) {
-      return [];
-    }
+    if (!tripData?.places) return [];
 
     let result = [];
 
@@ -323,24 +317,24 @@ function ItineraryResult({ tripData }) {
       const data =
         attractionData[place] || {
           day: ["Local Sightseeing"],
-          evening: ["Free Time"],
+          evening: ["Free Time"]
         };
 
       result.push({
         dayNumber: i + 1,
         city: place,
         dayPlaces: data.day,
-        eveningPlaces: data.evening,
+        eveningPlaces: data.evening
       });
     }
 
     return result;
   };
 
-  // ✅ GENERATED (CREATE MODE)
-  const generatedItinerary = generateItinerary();
+  // ✅ SIMPLE CONDITIONAL VARIABLE
+  const generatedItinerary = id ? [] : generateItinerary();
 
-  // ✅ DISPLAY (CREATE OR VIEW)
+  // ---------------- DISPLAY ----------------
   const displayItinerary =
     id ? dbTrip?.days || [] : generatedItinerary;
 
@@ -348,47 +342,54 @@ function ItineraryResult({ tripData }) {
     return <h3 className="text-center mt-5">Loading trip...</h3>;
   }
 
-  // ---------------- SAVE TRIP ----------------
+  // ---------------- SAVE ----------------
   const saveTrip = async () => {
+
+    if (generatedItinerary.length === 0) {
+      alert("Itinerary not ready");
+      return;
+    }
+
     try {
 
       const token = localStorage.getItem("token");
+
       if (!token) {
         navigate("/login");
         return;
       }
 
       await axios.post(
-        "http://localhost:5223/api/Trips/save",
-        {
-          stateId: tripData.stateId,
-          startDate: tripData.startDate,
-          endDate: tripData.endDate,
-          travelers: tripData.travellers.length,
-          budget: tripData.estimatedBudget,
-          hotelType: tripData.hotelType,
-          transportMode: tripData.transport,
-          budgetRange: tripData.budgetRange,
+  "http://localhost:5223/api/Trips/save",
+  {
+    stateId: tripData.stateId,
+    startDate: tripData.startDate,
+    endDate: tripData.endDate,
+    travelers: tripData.travellers.length,
+    budget: tripData.estimatedBudget,
+    hotelType: tripData.hotelType,
+    transportMode: tripData.transport,
+    budgetRange: tripData.budgetRange,
 
-          // ⚡ USE GENERATED ITINERARY ONLY
-          itinerary: generatedItinerary.map(day => ({
-            dayNumber: day.dayNumber,
-            activities: [
-              ...day.dayPlaces.map(p => ({
-                timeSlot: "Day",
-                activityName: p
-              })),
-              ...day.eveningPlaces.map(p => ({
-                timeSlot: "Evening",
-                activityName: p
-              }))
-            ]
-          }))
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
+    itinerary: generatedItinerary.map(day => ({
+      dayNumber: day.dayNumber,
+      activities: [
+        ...day.dayPlaces.map(p => ({
+          timeSlot: "Day",
+          activityName: p
+        })),
+        ...day.eveningPlaces.map(p => ({
+          timeSlot: "Evening",
+          activityName: p
+        }))
+      ]
+    }))
+  },
+  {
+    headers: { Authorization: `Bearer ${token}` }
+  }
+);   // ✅ THIS WAS MISSING
+
 
       alert("Trip saved successfully!");
       navigate(`/recommendation/${tripData.state}`);
@@ -406,11 +407,11 @@ function ItineraryResult({ tripData }) {
       <h2 className="itinerary-title">🗺 Your Trip Itinerary</h2>
       <p className="itinerary-subtitle">Day wise travel plan</p>
 
-      {displayItinerary.map(item => (
+      {displayItinerary.map((item, index) => (
 
-        <div key={item.dayNumber} className="day-card">
+        <div key={index} className="day-card">
 
-          <h4>Day {item.dayNumber}</h4>
+          <h4>Day {item.dayNumber || index + 1}</h4>
 
           {/* DAY */}
           <div className="session">
@@ -452,7 +453,10 @@ function ItineraryResult({ tripData }) {
 
       {!id && (
         <div className="text-center">
-          <button className="btn btn-primary save-btn" onClick={saveTrip}>
+          <button
+            className="btn btn-primary save-btn"
+            onClick={saveTrip}
+          >
             💾 Save Trip & View State Info
           </button>
         </div>

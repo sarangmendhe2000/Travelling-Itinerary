@@ -28,6 +28,14 @@ function CreateTrip() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+  document.documentElement.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}, [step]);
+
+
   // ---------- AUTH CHECK ----------
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -113,7 +121,8 @@ function CreateTrip() {
   };
 
   return (
-    <div className="create-trip-bg page-offset">
+    <div className="create-trip-bg">
+
       <div className="trip-card">
 
         <div key={step} className="step-transition">

@@ -14,6 +14,8 @@ import ItineraryResult from "./pages/ItineraryResult";
 import StateRecommendation from "./pages/StateRecommendation";   // ✅ ADD
 import Explore from "./pages/Explore";
 import TripDetails from "./pages/TripDetails";
+import ScrollToTop from "./components/ScrollToTop";
+
 
 
 function AppContent() {
@@ -26,9 +28,10 @@ function AppContent() {
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+  {!hideNavbar && <Navbar />}
 
-      <Routes>
+  <div className="page-container">
+    <Routes>
 
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
@@ -51,7 +54,8 @@ function AppContent() {
         <Route path="/Explore" element={<Explore />} />
         <Route path="/trip/:tripId" element={<TripDetails />} />
 
-      </Routes>
+       </Routes>
+  </div>
     </>
   );
 }
@@ -59,6 +63,7 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <AppContent />
     </BrowserRouter>
   );
