@@ -22,10 +22,10 @@ function Step3Travellers({ tripData, setTripData }) {
 
     const newTraveller = { name, age, gender };
 
-    setTripData({
-      ...tripData,
-      travellers: [...tripData.travellers, newTraveller]
-    });
+    setTripData(prev => ({
+      ...prev,
+      travellers: [...prev.travellers, newTraveller]
+    }));
 
     setName("");
     setAge("");

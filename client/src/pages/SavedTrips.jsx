@@ -1,24 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./SavedTrips.css";
 
 function SavedTrips() {
 
   const navigate = useNavigate();
+  const [trips, setTrips] = useState([]);
 
-  const [trips, setTrips] = useState(() => {
-    const storedTrips = localStorage.getItem("myTrips");
-    return storedTrips ? JSON.parse(storedTrips) : [];
-  });
+  // -------- LOAD TRIPS ----------
+  useEffect(() => {
 
-  // ✅ DELETE TRIP
-  const deleteTrip = (id, e) => {
-    e.stopPropagation();   // prevent opening card
+    const loadTrips = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-    const updatedTrips = trips.filter(trip => trip.id !== id);
+        const response = await axios.get(
+          "http://localhost:5223/api/Trips/my",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-    setTrips(updatedTrips);
-    localStorage.setItem("myTrips", JSON.stringify(updatedTrips));
+        setTrips(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    loadTrips();
+
+  }, []);
+
+  // -------- DELETE TRIP ----------
+  const deleteTrip = async (id, e) => {
+    e.stopPropagation();
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.delete(
+        `http://localhost:5223/api/Trips/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setTrips(prev => prev.filter(t => t.tripId !== id));
+
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -35,24 +71,26 @@ function SavedTrips() {
         {trips.map((trip) => (
 
           <div
-            key={trip.id}
+            key={trip.tripId}
             className="trip-card"
-            onClick={() => navigate(`/my-trips/${trip.id}`)}
+            onClick={() => navigate(`/my-trips/${trip.tripId}`)}
           >
 
             {/* DELETE BUTTON */}
             <span
               className="delete-btn"
-              onClick={(e) => deleteTrip(trip.id, e)}
+              onClick={(e) => deleteTrip(trip.tripId, e)}
             >
               ❌
             </span>
 
-            <h5>{trip.tripData.places.join(", ")}</h5>
+            <h5>Trip #{trip.tripId}</h5>
 
-            <p>📅 {trip.tripData.startDate} → {trip.tripData.endDate}</p>
+            <p>📅 {trip.startDate} → {trip.endDate}</p>
 
-            <p>👥 Travellers: {trip.tripData.travellers.length}</p>
+            <p>🏨 {trip.hotelType}</p>
+
+            <p>💰 {trip.budgetRange}</p>
 
           </div>
 
